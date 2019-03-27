@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from deleter.views import redirect_to_start
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('docs/', include('deleter.urls')),
+    path('', redirect_to_start)
 ]

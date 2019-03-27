@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	test template
+{% endblock %}
+
+{% block content %}
+<form>
+    <div class="form-group">
+      <label for="inputAddress">UTM address</label>
+      <input type="text" class="form-control" id="inputAddress" placeholder="123.234.123.234">
+    </div>
+       
+    <button type="submit" class="btn btn-primary">Sign in</button>
+</form>
+{% endblock %}
