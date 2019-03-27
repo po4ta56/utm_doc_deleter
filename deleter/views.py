@@ -4,15 +4,34 @@ from django.shortcuts import HttpResponse
 from django.views.generic import View
 
 from django.views.generic import DetailView, ListView
-from .models import DocumentInboxing, DocumentOutboxing
+from .models import DocumentInboxing, DocumentOutboxing, UTM
 
-#class IncomingDocView(DetailView):
-#    model = IncomingDoc
-#    template_name = 'incomindDoc.html'
-#    context_object_name = doc
-#
-#    def get(self):
-#        return HttpResponse('detail')
+class SettingsView(DetailView):
+    model = UTM
+    template_name = 'deleter/setting.html'
+    #context_object_name = doc
+
+    #def get(self):
+    #    return HttpResponse('detail')
+
+    #def get_queryset(self):
+    #    queryset = UTM.objects.all()
+    #    if len(queryset) == 0:
+    #        utm = UTM()
+    #        utm.addres = '127.0.0.1'
+    #        utm.save()
+    #        queryset = UTM.objects.all()
+    #    return queryset[:1]
+
+    def get_object(queryset=None):
+        queryset = UTM.objects.all()
+        if len(queryset) == 0:
+            utm = UTM()
+            utm.addres = '127.0.0.1'
+            utm.save()
+            queryset = UTM.objects.all()
+        return queryset[0]
+        
 
 class OutboxingDocsView(ListView):
     template_name = 'deleter/docs_list.html'
@@ -43,5 +62,5 @@ def show_inboxing_docs(request, docid=None):
 
 
 def redirect_to_start(request):
-    return redirect('inbox')
+    return redirect('setting')
     

@@ -18,3 +18,7 @@ class DocumentOutboxing(models.Model):
         verbose_name = 'Исходящий документ'
         verbose_name_plural = 'Исходящие документы'
         ordering = ('-title',) # сортировка по умолчанию в обратном порядке
+
+
+class UTM(models.Model):
+    addres = models.CharField(max_length=15)
