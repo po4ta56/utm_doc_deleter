@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Documents
+{% endblock %}
+
+{% block content %}
+
+	<h1 class="mb-5">documents:</h1>
+
+		{% for post in page_object.object_list %}
+
+			{% include 'blog/includes/post_card_template.html' %}
+
+		{% endfor %}
+{% endblock %}

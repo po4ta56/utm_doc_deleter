@@ -8,7 +8,7 @@ from .models import DocumentInboxing, DocumentOutboxing, UTM
 
 class SettingsView(DetailView):
     model = UTM
-    template_name = 'deleter/setting.html'
+    template_name = 'settings.html'
     #context_object_name = doc
 
     #def get(self):
@@ -23,7 +23,11 @@ class SettingsView(DetailView):
     #        queryset = UTM.objects.all()
     #    return queryset[:1]
 
-    def get_object(queryset=None):
+    def dispatch(self, request, *args, **kwargs):
+        print(request.GET)
+        return super(SettingsView, self).dispatch(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
         queryset = UTM.objects.all()
         if len(queryset) == 0:
             utm = UTM()
@@ -62,5 +66,17 @@ def show_inboxing_docs(request, docid=None):
 
 
 def redirect_to_start(request):
+    return redirect('setting')
+
+
+def clear_all(request):
+    DocumentInboxing.objects.all().delete()
+    DocumentOutboxing.objects.all().delete()
+    return redirect('setting')
+
+
+def reload_docs(request):
+    DocumentInboxing.Load()
+    DocumentOutboxing.Load()
     return redirect('setting')
     
