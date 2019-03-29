@@ -23,10 +23,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav">
-                    <li class="nav-item {% if request.path ==  'docs/outbox' %} active {%endif%}">
+                    <li class="nav-item {% if request.path ==  '/docs/outbox/' %} active {%endif%}">
                       <a class="nav-link" href="{% url 'outbox' %}">Исходящие документы<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item {% if request.path == 'docs/inbox' %} active {%endif%}">
+                    <li class="nav-item {% if request.path == '/docs/inbox/' %} active {%endif%}">
                       <a class="nav-link" href="{% url 'inbox' %}">Входящие документы<span class="sr-only">(current)</span></a>
                     </li>
                     <!--<li class="nav-item">

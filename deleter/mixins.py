@@ -1,6 +1,7 @@
 import re
 import requests
 import xml.etree.ElementTree as eltree
+from .models import *
 
 def get_utm_doc_urls(address):
 
@@ -14,10 +15,13 @@ def get_utm_doc_urls(address):
     return docurls
 
 
-def delete_utm_doc(Model, docurl):    
-    obj = Model.objects.filter(url='url')
-    obj.delete()
-    requests.request('DELETE', docurl)
+def delete_utm_doc(Model, docid):    
+    queryset = Model.objects.filter(pk=docid)
+    if len(queryset):
+        obj = queryset[0]
+        docurl = obj.url
+        obj.delete()
+        requests.request('DELETE', docurl)
 
 
 def load(Model, address):
@@ -28,3 +32,27 @@ def load(Model, address):
         model.url = url
         model.save()
 
+
+def load_inbox():
+    load(DocumentInboxing, get_address_inbox())
+
+
+def load_outbox():
+    load(DocumentOutboxing, get_address_outbox())
+
+
+
+
+def get_address():
+    servers = UTM.objects.all()
+    assert len(servers),  ' Адрес UTM не задан!'
+    
+    return 'http://' + servers[0].address
+
+
+def get_address_inbox():
+    return get_address() + ':8080/opt/out'
+
+
+def get_address_outbox(): 
+    return get_address() + ':8080/opt/in'

@@ -8,7 +8,7 @@
 <form action="" method="GET">
     <div class="form-group">
       <label for="inputAddress">UTM address</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder="123.234.123.234">
+      <input type="text" class="form-control" id="inputAddress" placeholder="123.234.123.234" {% if utm.address %} value="{{utm.address}}" {% endif %}>
     </div>
        
     <input type="submit" class="btn btn-primary btn-lg" value="Save">
@@ -16,11 +16,4 @@
     <a href="{% url 'reload_docs' %}" class="btn btn-primary btn-lg" role="button">Reload</a>
 </form>
 
-<form action="" method="GET">
-  <select name="ordering" id="">
-    <option value="id">ID</option>
-    <option value="name">Name</option>
-  </select>
-  <input type="submit" value="send">
-</form>
 {% endblock %}

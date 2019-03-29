@@ -5,11 +5,14 @@ from django.views.generic import View
 
 from django.views.generic import DetailView, ListView
 from .models import DocumentInboxing, DocumentOutboxing, UTM
+from .forms import SettingsForm
+
+import deleter.mixins as mixins
 
 class SettingsView(DetailView):
     model = UTM
     template_name = 'settings.html'
-    #context_object_name = doc
+    context_object_name = 'utm'
 
     #def get(self):
     #    return HttpResponse('detail')
@@ -25,6 +28,8 @@ class SettingsView(DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         print(request.GET)
+        self.form = SettingsForm(request.GET)
+        self.form.is_valid()
         return super(SettingsView, self).dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
@@ -38,7 +43,7 @@ class SettingsView(DetailView):
         
 
 class OutboxingDocsView(ListView):
-    template_name = 'deleter/docs_list.html'
+    template_name = 'docs_list.html'
     model = DocumentOutboxing
 
     def dispatch(self, request, *args, **kwargs):
@@ -47,9 +52,25 @@ class OutboxingDocsView(ListView):
 
     def get_queryset(self):
         queryset = DocumentOutboxing.objects.all()
-        if self.sort_field:
-            queryset.order_by(self.sort_field)[:10]
+        #if self.sort_field:
+        #    queryset.order_by(self.sort_field)[:10]
         return queryset
+
+
+class InboxingDocsView(ListView):
+    template_name = 'docs_list.html'
+    model = DocumentInboxing
+
+    def dispatch(self, request, *args, **kwargs):
+        self.sort_field = request.GET.get('sort_field')
+        return super(InboxingDocsView, self).dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = DocumentInboxing.objects.all()
+        #if self.sort_field:
+        #    queryset.order_by(self.sort_field)[:10]
+        return queryset
+
 
 
 class OutboxingView(View):
@@ -76,7 +97,17 @@ def clear_all(request):
 
 
 def reload_docs(request):
-    DocumentInboxing.Load()
-    DocumentOutboxing.Load()
+    mixins.load_inbox()
+    mixins.load_outbox()
     return redirect('setting')
+
+
+def remove_inbox_doc(request, docid):
+    mixins.delete_utm_doc(DocumentInboxing, docid)
+    return redirect('inbox')
+
+
+def remove_outbox_doc(request, docid):
+    mixins.delete_utm_doc(DocumentOutboxing, docid)
+    return redirect('outbox')
     

@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import DocumentInboxing, DocumentOutboxing
+from .models import *
 
-@admin.register(DocumentInboxing, DocumentOutboxing)
+@admin.register(DocumentInboxing, DocumentOutboxing, UTM)
 class AuthorAdmin(admin.ModelAdmin):
     pass
 
