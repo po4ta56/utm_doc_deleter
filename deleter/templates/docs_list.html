@@ -7,7 +7,9 @@
 {% block content %}
 
 	<h1 class="mb-5">documents {{object_list.count}}:</h1>
-
+	<div class="text-right">
+		<a href="{{request.path}}removeall" class="btn btn-primary">Delete all</a> <br><br>
+	</div>
 		{% for doc in object_list %}
 			{% include 'doc_card.html' %}			
 

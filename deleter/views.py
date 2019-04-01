@@ -111,3 +111,16 @@ def remove_outbox_doc(request, docid):
     mixins.delete_utm_doc(DocumentOutboxing, docid)
     return redirect('outbox')
     
+
+def remove_all_inbox_doc(request):
+    allDoc = DocumentInboxing.objects.all()
+    for doc in allDoc:
+        mixins.delete_utm_doc(DocumentInboxing, doc.pk)
+    return redirect('inbox')
+
+
+def remove_all_outbox_doc(request):
+    allDoc = DocumentOutboxing.objects.all()
+    for doc in allDoc:
+        mixins.delete_utm_doc(DocumentOutboxing, doc.pk)
+    return redirect('outbox')
