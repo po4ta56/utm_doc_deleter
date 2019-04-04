@@ -7,6 +7,7 @@ import requests
 class DocumentInboxing(models.Model):
     title = models.CharField(max_length=255)
     url = models.CharField(max_length=500)
+    text = models.TextField()
     
     class Meta:
         verbose_name = 'Входящий документ'
@@ -16,6 +17,7 @@ class DocumentInboxing(models.Model):
 class DocumentOutboxing(models.Model):
     title = models.CharField(max_length=255)
     url = models.CharField(max_length=500)
+    text = models.TextField()
 
     class Meta:
         verbose_name = 'Исходящий документ'
@@ -25,4 +27,8 @@ class DocumentOutboxing(models.Model):
 
 class UTM(models.Model):
     address = models.CharField(max_length=15)
+
+    class Meta:
+        verbose_name = 'УТМ'
+        verbose_name_plural = 'УТМ'
 

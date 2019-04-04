@@ -56,3 +56,7 @@ def get_address_inbox():
 
 def get_address_outbox(): 
     return get_address() + ':8080/opt/in'
+
+
+def get_utmdoc_text(doc_url):
+    
